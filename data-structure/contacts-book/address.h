@@ -17,6 +17,36 @@ private:
 
 public:
     Address() {}
+    Address(string input)
+    {
+
+        int index = 0;
+        string temp = "";
+        for (int i = 0; i < input.size(); i++)
+        {
+            if (input[i] == '\n')
+            {
+                if (index == 0)
+                {
+                    street_name = temp;
+                }
+                else if (index == 1)
+                {
+                    city = temp;
+                }
+                else if (index == 2)
+                {
+                    state = temp;
+                }
+                index++;
+                temp = "";
+            }
+            else
+            {
+                temp += input[i];
+            }
+        }
+    }
 
     static Address read_info()
     {
@@ -36,8 +66,21 @@ public:
         string state;
         cin >> state;
         address.set_state(state);
+
+        return address;
     }
 
+    string to_string() const
+    {
+        return street_name + "\n" //
+               + city + "\n"      //
+               + state;
+    }
+
+    string get_street_name()
+    {
+        return street_name;
+    }
     void set_street_name(string name)
     {
         street_name = name;
@@ -46,13 +89,17 @@ public:
     {
         city = c;
     }
-    void set_city(string c)
+    string get_city()
     {
-        city = c;
+        return city;
     }
     void set_state(string s)
     {
         state = s;
+    }
+    string get_state()
+    {
+        return state;
     }
 
     void print() const

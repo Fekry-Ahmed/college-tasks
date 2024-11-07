@@ -47,4 +47,20 @@ int show_read_menu(const vector<string> &choices, string header = "Menu")
   return read_int(1, choices.size());
 }
 
+vector<string> split_tring(string s, string delimiter = ",")
+{
+  vector<string> strs;
+
+  int pos = 0;
+  string substr;
+  while ((pos = (int)s.find(delimiter)) != -1)
+  {
+    substr = s.substr(0, pos);
+    strs.push_back(substr);
+    s.erase(0, pos + delimiter.length());
+  }
+  strs.push_back(s);
+  return strs;
+}
+
 #endif /* UTILS_H_ */

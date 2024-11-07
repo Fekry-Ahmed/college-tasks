@@ -2,7 +2,9 @@
 #define CONTACT_H_
 
 #include <string>
+#include <vector>
 #include "address.h"
+#include "utils.h"
 
 class Contact
 {
@@ -62,9 +64,28 @@ private:
 
 public:
     Contact() {}
-    ~Contact()
+    Contact(string input)
     {
-        // delete address;
+        vector<string> v = split_tring(input, "\n");
+        first_name = v[0];
+        last_name = v[1];
+        phone_number = v[2];
+        category = v[3];
+        is_favourite = v[4] == "1";
+        mail = v[5];
+        address = Address(v[6] + "\n" + v[7] + "\n" + v[8]);
+    }
+    ~Contact() {}
+
+    string to_string() const
+    {
+        return first_name + "\n" +                 //
+               last_name + "\n" +                  //
+               phone_number + "\n" +               //
+               category + "\n" +                   //
+               (is_favourite ? "1" : "0") + "\n" + //
+               mail + "\n" +                       //
+               address.to_string();
     }
 
     void set_first_name(string f)

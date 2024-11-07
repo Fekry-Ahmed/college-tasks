@@ -6,6 +6,9 @@ using namespace std;
 #include "array.h"
 #include "contact.h"
 #include <iostream>
+#include <fstream>
+
+string CONTACT_SEPERATOR = "-----------------------------";
 
 class ContactsManager
 {
@@ -74,6 +77,8 @@ public:
             contact.print();
             cout << "-----------------------------" << endl;
         }
+
+        cout << "No contacts";
     }
     void print_fav_contacts() const
     {
@@ -102,17 +107,51 @@ public:
         contacts.get(index).update();
     }
 
-    Contact search_contact(const string &name) const
+    void save_contacts() const
     {
-        for (int i = 0; i < contacts.getSize(); i++)
-        {
-            Contact contact = get_contact(i);
-            // if (contact.get_name() == name)
-            return contact;
-        }
+        ofstream outFile("./contacts.txt", ios::trunc);
 
-        throw std::runtime_error("Contact: `" + name + "` not found: "); // Should really throw an error?
+        if (outFile.is_open())
+        {
+            for (int i = 0; i < contacts.getSize(); i++)
+            {
+                Contact contact = get_contact(i);
+                outFile << contact.to_string() << endl;
+                outFile << CONTACT_SEPERATOR << endl;
+            }
+            outFile.close();
+        }
+    }
+
+    void load_contacts()
+    {
+        // string first_name;
+        // string last_name;
+        // string phone_number;
+        // string category;
+        // bool is_favourite;
+        // string mail;
+        // Address address;
+
+        string input = "";
+
+        ifstream inFile("./contacts.txt");
+        string line;
+        if (inFile.is_open())
+        {
+            while (getline(inFile, line))
+            {
+                if (line == CONTACT_SEPERATOR)
+                {
+                    Contact contact = Contact(input);
+                    contacts.push(contact);
+                    input = "";
+                }
+                else
+                    input += line + "\n";
+            }
+            inFile.close();
+        }
     }
 };
-
 #endif // CONTACTS_MANAGER_H_

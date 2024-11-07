@@ -41,9 +41,9 @@ public:
             else if (choice == 5)
                 contacts_manager.print_fav_contacts();
             else if (choice == 6)
-                cout << "contacts_manager.save_contacts();";
+                contacts_manager.save_contacts();
             else if (choice == 7)
-                cout << "contacts_manager.load_contacts();";
+                contacts_manager.load_contacts();
             else if (choice == 8)
                 cout << "Delete a contact";
             else if (choice == 9)
